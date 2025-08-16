@@ -1,0 +1,35 @@
+PK��jxV������������	���chatbot-hf/UT	�,1d,1dux�����PK��jxV������������4���chatbot-hf/package.jsonUT	�,1d,1dux�����{ "name": "chatbot-hf", "version": "1.0.0", "scripts": { "start": "vercel dev" } }PK��jxV���������������chote-xf/api/UT	�/1dl1dux�����PK��jxV������������(���chatbot-hf/api/chat.jsUT	�/1d,1dux�����export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST method allowed" });
+  }
+
+  try {
+    const { message } = req.body;
+
+    // Model BOT free chtbot
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill",
+      {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.HF_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ inputs: message })
+    }
+    );
+
+    const data = await response.json();
+    const reply = data[0]?.generated_text || "€ Maaf, server sibuk.";
+
+    res.status(200).json({ reply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json( { error: "Server error" });
+  }
+}
+PK4��jxV������������	���������������chatbot-hf/UT�/1dux�����PK4��jxV�������������4�������������chatbot-hf/package.jsonUT�/1dux�����PK
+�
+�jxV�����������������������chote-bot-hf/api/UT�/1dux�����PK
+�
+�jxV������������(�������������gchote-bot-hf/api/chat.jsUT�/1dux�����PK������m��Z����
